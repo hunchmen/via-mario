@@ -82,7 +82,7 @@ public class Window {
     // Free the memory
     glfwFreeCallbacks(glfwWindow);
     glfwDestroyWindow(glfwWindow);
-    
+
     // Terminate GLFW and the free the error callback
     glfwTerminate();
     glfwSetErrorCallback(null).free();
@@ -109,7 +109,11 @@ public class Window {
     if (glfwWindow == 0) { // need to check if null is deference from 0
       throw new IllegalStateException("Failed to create GLFW window");
     }
-
+    
+    glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+    glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+    glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+    
     // Make the OPENGL context current
     glfwMakeContextCurrent(glfwWindow);
 
