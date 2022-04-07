@@ -6,6 +6,7 @@
  */
 package com.via.jade;
 
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
 import static org.lwjgl.glfw.GLFW.GLFW_MAXIMIZED;
 import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
@@ -21,6 +22,8 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11C.glClear;
 import static org.lwjgl.opengl.GL11C.glClearColor;
@@ -75,6 +78,14 @@ public class Window {
 
     init();
     loop();
+
+    // Free the memory
+    glfwFreeCallbacks(glfwWindow);
+    glfwDestroyWindow(glfwWindow);
+    
+    // Terminate GLFW and the free the error callback
+    glfwTerminate();
+    glfwSetErrorCallback(null).free();
   }
 
   public void init() {
